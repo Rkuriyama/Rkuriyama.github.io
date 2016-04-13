@@ -1,0 +1,184 @@
+html,body{	/* parent  */
+	height: 100%;
+	width: 100%;
+}
+
+#view {
+	position: relative;
+	top: 0;
+	left:0;
+	-webkit-box-sizing:border-box;
+	   -moz-box-sizing:border-box;
+			box-sizing:border-box;
+	width:100%;
+	height:100%;
+	overflow:hidden;
+	visibility: hidden;
+}
+
+#column-wrapper {
+	position: absolute;
+	-webkit-box-sizing:border-box;
+	   -moz-box-sizing:border-box;
+	        box-sizing:border-box;
+}
+
+.row-wrapper {
+	position: relative;
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	     box-sizing:border-box;
+}
+
+.page {
+	-webkit-box-sizing:border-box;
+	   -moz-box-sizing:border-box;
+	        box-sizing:border-box;
+	padding: 30px 30px 30px 30px;
+	float: left;
+	border: solid 2px black;
+	overflow:scroll;
+}
+
+#Arrows > .nav_arrows {
+	position:absolute;
+	width: 30px;
+	height: 30px;
+	display: none;
+}
+
+
+
+#down_arrow {
+	bottom:0;
+	left:50%;
+	background: url(../img/down_arrow.png) no-repeat center center;
+	-webkit-transform: translateX(-50%);
+	   -moz-transform: translateX(-50%);
+	    -ms-transform: translateX(-50%);
+	     -o-transform: translateX(-50%);
+	        transform: translateX(-50%);
+	text-align:center;
+}
+
+#up_arrow {
+	top:0;
+	left:50%;
+	background: url(../img/up_arrow.png) no-repeat center center;
+	-webkit-transform: translateX(-50%);
+	   -moz-transform: translateX(-50%);
+	    -ms-transform: translateX(-50%);
+	     -o-transform: translateX(-50%);
+	        transform: translateX(-50%);
+	text-align:center;
+}
+#left_arrow {
+	background: url(../img/left_arrow.png) no-repeat center center;
+	left:0;
+	top:50%;
+	-webkit-transform: translateY(-50%);
+	   -moz-transform: translateY(-50%);
+	    -ms-transform: translateY(-50%);
+	     -o-transform: translateY(-50%);
+			transform: translateY(-50%);
+	text-align:center;
+}
+#right_arrow {
+	right:0;
+	top:50%;
+	background: url(../img/right_arrow.png) no-repeat center center;
+	-webkit-transform: translateY(-50%);
+	   -moz-transform: translateY(-50%);
+	    -ms-transform: translateY(-50%);
+	     -o-transform: translateY(-50%);
+			transform: translateY(-50%);
+}
+
+/* 矢印にアニメーションつけてみた。 */
+	#Arrows > .nav_arrows {
+	-webkit-transition: all 0.2s ease-in-out;
+	   -moz-transition: all 0.2s ease-in-out;
+	    -ms-transition: all 0.2s ease-in-out;
+	     -o-transition: all 0.2s ease-in-out;
+	        transition: all 0.2s ease-in-out;
+	}
+
+
+	#Arrows > .nav_arrows:hover {
+		background-color: rgba(0,0,0,0.8);
+		color: rgba(255,255,255,1);
+		/*width: auto;*/
+	}
+/* 矢印アニメーションここまで。 */
+
+.Page_Map {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	padding: 10px;
+	-webkit-box-sizing:border-box;
+	   -moz-box-sizing:border-box;
+	        box-sizing:border-box;
+}
+	.Page_Map > .map_row {
+		height:15px;
+		display: none;
+		visibility: hidden;
+	}
+
+	.Page_Map > .map_row > .map_page { 
+		height: 100%;
+		width: 15px;
+		background: no-repeat;
+		background-image:url("../img/MapPageNormal.png");
+		background-size: 80% 80%;
+		background-origin: border-box;
+		background-position: 50% 50%;
+		cursor: pointer;
+		float: left;
+		display: none;
+		visibility: hidden;
+	}
+
+	.Page_Map > .map_row > .active_page {
+		color:red;
+		background-image:url("../img/MapPageActive.png");
+	}
+
+
+	.Page_Map[data-type="row_only"] > .active ,
+	 .Page_Map[data-type="row_only"] > .active > .map_page {
+		display: inline-block;
+		visibility: visible;
+	}
+
+	.Page_Map[data-type="column_only"] > .map_row ,
+	.Page_Map[data-type="column_only"] > .map_row:not(.active) > .map_page:first-child ,
+	.Page_Map[data-type="column_only"] > .active > .active_page {
+		display:block;
+		visibility: visible;
+	}
+	
+
+	.Page_Map[data-type="column&active_row"] > .map_row {
+				display: block;
+				visibility: visible;
+			}
+		.Page_Map[data-type="column&active_row"] > .map_row > .map_page {
+			display: inline-block;
+			visibility: hidden;
+		}
+			.Page_Map[data-type="column&active_row"] > .map_row:not(.active) > .map_page:first-child,
+			.Page_Map[data-type="column&active_row"] > .active > .map_page {
+				display: inline-block;
+				visibility: visible;
+			}
+
+	.Page_Map[data-type="default"] > .map_row{
+		display: block;
+		visibility: visible;
+	}
+		.Page_Map[data-type="default"] > .map_row > .map_page {
+			display: inline-block;
+			visibility: visible;
+		}

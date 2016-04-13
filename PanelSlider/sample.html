@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <title>PanelSlide.js & AutoSlide.js tutorial</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style type="text/css">
+                /*CSSのリセット/////////////////////////////////////////
+            YUI 3.17.2 (build 9c3c78e)
+            Copyright 2014 Yahoo! Inc. All rights reserved.
+            Licensed under the BSD License.
+            http://yuilibrary.com/license/
+            */
+            html{color:#000;background:#FFF}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0}table{border-collapse:collapse;border-spacing:0}fieldset,img{border:0}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal}ol,ul{list-style:none}caption,th{text-align:left}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal}q:before,q:after{content:''}abbr,acronym{border:0;font-variant:normal}sup{vertical-align:text-top}sub{vertical-align:text-bottom}input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;*font-size:100%}legend{color:#000}#yui3-css-stamp.cssreset{display:none;}
+
+        </style>
+        <link rel="shortcut icon" href="img/favicon.ico">
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <link rel="stylesheet" type="text/css" href="css/PanelSlider.css">
+        <script type="text/javascript" src="js/jquery-min.js"></script>
+        <script type="text/javascript" src="js/jquery.easing.js"></script>
+        <script type="text/javascript" src="js/jquery.PanelSlider.UsefulHash.js"></script>
+        <script type="text/javascript" src="js/jquery.PanelSlider.js"></script>
+        <script type="text/javascript" src="js/jquery.PanelSlider.AutoSlide.js"></script>
+
+        <script type="text/javascript">
+				 SLGL.Resize = true;
+				 SLGL.KeepPageIndex = false;
+				 SLGL.Debug = false;
+				 SLGL.AddHashOn = true;
+				 SLGL.MouseWheel = true;
+				 SLGL.Easing = "easeInOutCubic";
+				 SLGL.AnimationTime = 500;
+				 SLGL.QuitePeriod = 500;
+				 SLGL.Arrows = true;
+				 SLGL.Map = true;
+				 SLGL.MapType = "default";
+		 		SLGL.SlideEffect = "1";
+				 SLGL.Mobile = false;
+		 		SLGL.FlickOn = false;
+        </script>
+        <script>
+        	UHGL = {
+        		"right":function(){r_slide('right');},
+        		"left":function(){r_slide('left');},
+        		"up":function(){r_slide('up');},
+        		"down":function(){r_slide('down');},
+        		"Effect0":function(){
+        			SLGL.SlideEffect = "0";
+        			AllSlide('vertical',1000,'',true);
+        		},
+        		"Effect1":function(){
+        			SLGL.SlideEffect = "1";
+        			AllSlide('vertical',1000,'',true);
+        		},
+        		"title1":function(){
+        			document.title="あああああああああああ";
+        		}
+       		}
+        </script>
+    </head>
+    <body>
+		<div id="view">
+			<div id="column-wrapper">
+				<div class="row-wrapper" >
+					<div id="top" class="page">
+						<h1 style="text-align:center">Let's start　PanelSlider.js !!!!</h1>
+				        <h2 style="text-decoration:underline;margin-left:50px;"> ＊Description</h2>
+				        <p>このjsはパネルに縦スライドと横スライドを実装したものです。</p>
+				        <p>デモでは画面全体が動きますが、設定次第では横幅、縦幅は変更可能です。</p>
+				        <p>右下のマップと矢印、hrefによるページスライド、マウスホイールでの縦スライドなどが実装済みです。</p>
+				        <p>(注意：pageの高さがウィンドウのサイズを超えると、マウスホイールでの縦スライドはそのページだけ無効になります。)</p>
+				        <h2 style="text-decoration:underline;margin-left:50px;"> ＊Requirement</h2>
+				        <p>jQueryのversion1.11以降。これを作ったときは jQuery v1.11.2。</p>
+				        <p>必須ではないが、jquery.easingプラグインがあるとアニメーションをカスタマイズしやすくなります。</p>
+				        <p> <a href="#!-right">次は右ページへ→</a></p>
+				        <p><a  onClick="slide(1,2)">更新情報はこっち</a>：最終更新2015/1/19/21:20</p>
+				        <p>AutoSlide.jsについては<a href="#page-2-0" class="jump">こちら</a></p>
+				        <p>UsefulHash.jsについては<a href="#page-3-0">こちら</a></p>
+				        <p style="color:red;">UsefulHash.jsを使うことで、ページのidで遷移できるようになりました!!情報は<a href="##-UH2">こちら</a></p>
+
+					</div>
+					<div class="page" style="text-align:center;">
+				        <h2 style="text-decoration:underline;">＊Usage</h2>
+				        <img src="img/Usage2.png">
+				        <img src="img/Usage.png">
+				        <p>上のようにjsを読み込み、id,classを追加。viewが全体の画面、column-wrapperが縦移動、row-wrapperが横移動を行って、.pageの中身が見れるという仕組み<br><br>
+				        	<a href="#page-1-1">実際の動きを見てみる</a>
+				        	<a href="#page-0-2">*詳しい使い方</a>
+				        </p>
+
+					</div>
+					<div class="page">
+						さっきの写真。色々変数が書いてあったが、それの意味をここで説明する。<br>
+						(ここの変数を何一つ設定しなくてもすべて正常に動く。変更したいものだけを選んで追加するといい。)<br>
+						また、指定の仕方は、jquery.PanelSlider.js を読み込んだすぐ後ろに　scriptタグを追加し、その中に<br>
+						<p>
+						SLGL.(option) = value;<br>とする。
+						<br><br><br>
+						</p>
+
+				 SLGL.Resize = true;<br> falseにすると、Windowの大きさをかえてもviewは変化しない。Viewの幅を固定したいときにはtrueにする。<br><br>
+				 SLGL.KeepPageIndex = false;<br> falseにすると、縦移動時、常に横１ページ目に移動する 例)false: page-0-1 ↓ page-1-0  true: page-0-1 ↓ page-1-1。<br><br>
+				 SLGL.Debug = false;<br>trueにすると、各ページに座標テキストを表示。要素に色を付与する。<br><br>
+				 SLGL.AddHashOn = false;<br>ページ遷移時のハッシュの付与のOn/Off<br>これを行うと、ページ内でのブラウザの"戻る""進む"が有効になる。デフォルトはfalse。<br><br>
+				 SLGL.MouseWheel = true;<br>マウスホイールによる縦移動のOn/Off <br><br>
+				 SLGL.Easing = "swing";<br>スライドアニメーションのEasing。早見表のあるサイト:http://easings.net/ja	<br><br>
+				 SLGL.AnimationTime = 500;<br> アニメーションの時間<br><br>
+				 SLGL.QuitePeriod = 800; <br>アニメーションの後の操作無効時間。<br><br>
+				 SLGL.Arrows = true;<br> ページ移動の矢印のOn/Off　基本falseにはしない。<br><br>
+				 SLGL.Map = true; <br>　ページマップのOn/Off<br><br>
+				 SLGL.MapType = "default";<br>ページマップのタイプ変更。[<a onClick="CheckMap('default')">defalut</a>][<a onClick="CheckMap('column&active_row')">column&active_row</a>][<a onClick="CheckMap('column_only')">column_only</a>][<a onClick="CheckMap('row_only')">row_only</a>][<a onClick="CheckMap('none')">none</a>]から指定できる。 CheckMap()　を使用することで動的に変更可能。(その場合はSLGL.Mapがtrueの必要がある。)<br><br>
+				 SLGL.SlideEffect="0"; <br> スライドの動きの変更。"1"にすると、(見かけ上)縦と横移動のみになる。<br>
+				        例)  <a href="#!-Effect0">SLGL.SlideEffect="0"</a>  <a href="#!-Effect1">SLGL.SlideEffect="1"</a>  (左をクリックすると、パラメータが変更された上でAutoSlideが始まります。)<br>
+				SLGL.Mobile = false; <br>  ZoomMap.jsを有効化するかどうか。(sample.htmlでは使っていない)  
+
+					</div>
+				</div>
+				<div class="row-wrapper">
+					<div class="page">
+				        <h2 style="text-decoration:underline;margin-left:50px;"> ＊使える関数</h2>
+				        ・  slide(y,x)<br>
+				        上からy番目、左からx番目のページに移動。一番左上の座標は0,0。<br><br>
+				        ・  r_slide(direction,distance)<br>相対値によるスライドの実装。仕組み的には、相対値指定から絶対値指定に変換しslideへ飛ばしている。 HTML要素に付与したいときは、onClickに r_slide( "direction",distance )。<br>direction に指定できるのは right, left, down, up。<br>top も指定でき、どこにいても常にpage-0-0に飛ぶ。<br>distance　は省略可能。省略すると1枚だけスライドする。<br><br>
+						・  CheckMap("MapType")<br>
+						マップタイプの変更。MapTypeには次の[<a onClick="CheckMap('default')">defalut</a>][<a onClick="CheckMap('column&active_row')">column&active_row</a>][<a onClick="CheckMap('column_only')">column_only</a>][<a onClick="CheckMap('row_only')">row_only</a>][<a onClick="CheckMap('none')">none</a>]から指定できる。(SLGL.Mapがtrueでないと無意味)<br><br>
+				        <h2 style="text-decoration:underline;margin-left:50px;"> ＊関数の使用方法</h2>
+				        <p>基本的には onClick属性に onClick="function('value',…)"のかたちで入れる。</br>
+				        classに jump を追加し href属性に #page-0-1　のようにページ座標を追加することで、onClickを使わなくてもスライドできる。<br>
+						これの利点として、aタグに jump クラス　を追加した場合、URLを変化させずにすむ。<br>
+						逆に、aタグのみ、href属性にページ座標を　#page-2-0 といったように追加するだけで、URLが書きかわるためにページ遷移は行える。	
+				        </p>
+					</div>
+					<div class="page">
+				        <h2 style="text-decoration:underline;margin-left:50px;"> ＊使用しているclassおよびid</h2>
+						＊id<br>
+						view, column-wapper, Page-map, Arrows, down_arrow, up_arrow, right_arrow, left_arrow<br><br>
+						＊class<br>
+						row-wrapper, page, jump, nav_arrows, row-(数字), page-(数字)-(数字), active, active_page, first_row, last_row, first_page, last_page, map_row, map_page, scrollable<br>
+						<img src="img/PanelSlideConstitution.png">
+					</div>
+					<div class="page">
+				        <h1 style="text-decoration:underline;margin-left:50px;"> ＊更新情報</h1>
+				        <p>2014/12/27 :右下のMAPに、自動でtitle属性を付与できるようにした。class="page" に title属性　を指定するか,
+				        	そのコンテンツ内に　h1　タグを使ったものを作るとそれが title属性　として付与される。</p>
+				        <p>これによって、右下のMapにカーソルを重ねたとき、一定時間経つとリンク先のタイトルがわかるようになった。</p>
+				        <br>
+				        <p>2014/12/27 :フリックによる横移動を実装。が、使い勝手が微妙でどうしようか迷う。一応、SLGL.FlickOn を true にすることで動く。*現在停止中
+				        </p>
+				        <br>
+				        <p>2014/12/28 :PanelSlider.js の機能を拡張するjs, jquery.PanelSlider.AutoSlide.jsを追加。bodyタグの直前に scriptタグを設置。その中か、aタグなどの要素の onClickに StartAS(array,interval)を打ち込んでやれば動く。<br>
+				        	StopAS() を実行すれば止まる。また、画面のどこか(正確には#view)をクリックしても止まる。<br>＊再開はしない。<br>
+				        ＊二重実行はできない。<br>
+				        arrayにはスライドさせるページのリストを座標で入れ、intervalにはスライドの時間間隔をmsで指定。<br>
+				    	例) <a onClick="StartAS(['0-0','0-1','0-2','1-0'],2000)" class="jPSAS">StartAS(["0-0","0-1","0-2","1-0"],2000);</a>  ←　クリックで実行。</p>
+				    	<br>
+				    	<p>
+				    		2014/12/28 :jquery.PanelSlider.AutoSlide.js　を更新。行の選択ができるようになった。(1行だけ。)<br>
+				    		<a onClick="StartAS(['row-1'],2000)" class="jPSAS">StartAS(["row-1"],2000);</a><br>
+				    		また、クリックでAutoSlideを実行させると同時に止まってしまう不具合を、クラスにjPSASと指定することで回避できるようにした。
+				    	</p>
+				    	<br>
+				    	<p>2014/12/28 :アドオンである　AutoSlide.js　を大幅更新。詳しくは<a onClick="slide(2,0)">こっち</a></p>
+				    	<br>
+				    	<p>2014/12/29 :Downloadできるようになった。また、色々なバグを修正。</p>
+				    	<p>2014/12/29 :アドオン、UsefulHash.jsを追加しました。htmlのコーディングがやりやすくなるんじゃないかな？</p>
+				    	<br>
+				    	<p>2015/01/03 :PanelSlider.jsを更新。矢印キーでページ遷移できるようになった。これを使うとマウスホイールで移動できないページでも移動できる。</p>
+				        <br>
+				        <p>2015/01/19 :PanelSlider.jsを色々更新。とりあえず、SLGL.SlideEffect="0" が通常のスライド(斜め移動)。"1"にすると、(見かけ上)縦と横移動のみ。</p>
+				        <p>例)  <a href="#!-Effect0">SLGL.SlideEffect="0"</a>  <a href="#!-Effect1">SLGL.SlideEffect="1"</a>  左をクリックすると、パラメータが変更された上でAutoSlideが始まります。</p>
+				        <br>
+				        <br>
+				        <p>更新予定</p>
+				        <p>scrollableによってマウスホイールが効かないページ要素において、一定条件の下にホイールイベントを起こす方法。(使い勝手悪そうならなくす。)</p>
+				        <p>ホイールによる横遷移の追加。</p>
+				        <p>AutoSlide.jsの AllSlide関数で、開始位置を指定できるようにする。</p>
+
+					</div>
+				</div>
+				<div class="row-wrapper">
+					<div class="page">
+				        <h1 style="text-decoration:underline;margin-left:50px;"> ＊About AutoSlide.js</h1>
+				        <p>
+				        	PanelSlider.js の機能を拡張するjs<br>
+				        	下の関数を実行することで自動でパネルをスライドさせることができる。<br><br>
+							このjsを読み込むのは, jquery  と　jquery.PanelSlider.js を読み込んだ後。
+				        	<br><br>
+							・StartAS( [array], interval, easing )<br>
+							 デフォルトの実行。arrayに指定したページを、interval秒ごとに easingに指定した効果で最初から順番にスライドする。<br>
+							 arrayには "row-(数字)" "column-(数字)" "(数字)-(数字)"が指定できる。<br>
+							 "row-(数字)"と指定すると、指定した数字の行のページがスライドされる(横移動)。 例)<a onClick="StartAS(['row-1'],2000)" class="jPSAS">StartAS(['row-1'],2000)</a><br>
+							 "column-(数字)"と指定すると、指定した数字番目の列がスライドされる(縦移動)。例)<a onClick="StartAS(['column-0'],2000)" class="jPSAS">StartAS(['column-0'],2000)</a><br>
+							 "(数字)-(数字)"にはページの座標。例) <a onClick="StartAS(['0-0','0-1','0-2','1-0'],2000)" class="jPSAS">StartAS(["0-0","0-1","0-2","1-0"],2000);</a><br>
+							 これらは組み合わせて指定もできる。例) <a onClick="StartAS(['1-2','row-1','column-0'],2000)" class="jPSAS">StartAS(["1-2","row-1","column-0"],2000);</a><br>
+							 <br>
+							 ・AllSlide( direction, interval, easing, AllSFA )<br>
+							 directionには垂直 "vertical"　か平行 "parallel"を指定。<br>
+							interval,easingはStartAS()と同じ。<br>
+							AllSFA　(AllSlideFromActive)　は、trueにすると現在のページからスライドが開始され、falseにすると.page-0-0からスライドが開始する。<br>
+							例)<a onClick="AllSlide('vertical',2000,'',false)" class="jPSAS"> AllSlide('vertical',2000,'',false)</a>  例)<a onClick="AllSlide('parallel',2000,'',true)" class="jPSAS">AllSlide('parallel',2000,'',true)</a><br>
+							<br>
+							このjsの、指定可能な変数は<a onClick="r_slide('right')">→</a>
+				        </p>
+					</div>
+					<div class="page">
+				        <h1 style="text-decoration:underline;margin-left:50px;"> ＊About AutoSlide.js 〜変数について〜</h1>
+				        <p>ここにかかれている変数は、このjsを読み込んだ後の scriptタグにて変更可能。すでに入っているのは変更しなかった場合のデフォルトの値</p>
+				        <br>
+				        <p>
+								・ASGL.Easing = "easeInOutSine";<br>
+								StartAS関数もしくは AllSlide関数において、easingを "  " を用いて省略した場合のデフォルトイージング。<br>
+								SLGL.Easing　を入れてやれば  PanelSlider.js でのデフォルトイージングが適用される。
+								<br><br>
+								・ASGL.Interval = 2000;<br>
+								スライドしてから次に移るまでの時間間隔。
+								<br><br>
+								・ASGL.AllSFA = true;<br>
+								AllSlide関数を実行したときのスライドの開始位置を今いる場所にする。falseにすると最初のページ(#page-0-0)からスタートする。
+								<br><br>
+				        </p>
+					</div>
+				</div>
+
+				<div class="row-wrapper">
+					<div id="ぴーしーでぃー" class="page">
+				        <h1 style="text-decoration:underline;margin-left:50px;">＊UsefulHash.js＊</h1>
+						<p>This js extend a tag's href attribute.</p>
+						<p>このjsはaタグのhref属性の機能を拡張するものです<br>
+							aタグのhref属性に #!-(変数) と指定することで、変数に代入された関数を実行できるようにするものです。<br>
+							これによって、絶対座標移動だけでなく、相対座標移動も、href属性を使って実装できるようになります。
+							<br><br>
+							・使い方<br>
+							UHGLのプロパティに下のように関数を追加します。<br>
+							<a href="##-top" target="blank">
+							<img src="img/UsefulHash.js-p.png"><br>
+							</a>
+							そして、aタグの href属性に　#!-(変数) と指定すると、onClickと同じように動作します。<br>
+							<img src="img/UsefulHash.js-a.png"><br>
+							onClickを多く使いたくないときにどうぞ。<br>
+							slide()　や r_slide() 以外にも使えます。関数を入れてるだけなので、なんでも出来ます。<br>
+							例)<a href="#!-up">上へ</a><br><br>
+							例)<a href="##-top">トップへ</a><br><br>
+							<p>＊注意　これをインクルードする場所は、PanelSlider.jsの前です。<br>クラスにjumpは追加しないでください。</p>
+						</p>
+					</div>
+					<div id="UH2" class="page">
+				        <h1 style="text-decoration:underline;margin-left:50px;">＊UsefulHash.js＊</h1>
+				        <p style="color:red;">ページのidで遷移できるようになりました!!</p>
+				        <br>
+				        <p>
+				        	div の class="page" に idを設定することで, aタグのhrefで遷移できます。<br>
+				        <img src="img/UH-2.png">
+				        <br><br>href="##-(id)"と指定します。<br>
+				        <img src="img/UH-1.png">
+				        </p>
+				        <p>今回は、このページの左のページに "UH" 、page-0-0　には "top" というid　を指定しました。<br>
+				        <br>例)<a href="##-top">top</a>---<a href="##-UH">UH</a> <br>
+				    	</p>
+					</div>
+				</div>
+			</div>
+		</div>
+    </body>
+</html>
