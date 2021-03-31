@@ -33,8 +33,9 @@
 			<p><a href="https://www.frontiersin.org/articles/10.3389/fninf.2019.00037/full">先行研究 "Reconstruction and Simulation of a Scaffold Model of the Cerebellar Network" (Casalli, et al., 2019)</a></p>
 			
 			<h3>シミュレーション結果の可視化</h3>
-			<p>シミュレーションの出力データ(id, spike time)と細胞の座標 (id, vec3) を読み込んで実行。OpenGLを用いて制作。矢印キーでぐりぐり動かせる。
+			<p>シミュレーションの出力データ(id, spike time)と細胞の座標 (id, vec3) を読み込んで実行。1つの点が1つの神経細胞に対応しており、種別によって色が異なる。
 			<br>シミュレーション時間のまま表示すると何もわからないので、1分程度に引き延ばした。最後数秒は適当なデータを与えて回路全体を見やすくしたもの。
+			<br>CUDAからOpenGLを利用。矢印キーでぐりぐり動かせる。
 			</p>
 			<video src="./VisualizedDemo.mkv" controls></video>
 			<p><a href="https://github.com/Rkuriyama/3DVisualizationFromSpikeData">code (github)</a></p>
